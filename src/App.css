@@ -1,41 +1,41 @@
 svg {
   color: #fff;
+  display: block;
 }
 
 button {
   cursor: pointer;
   text-align: center;
-  border: 2px solid rgba(0,0,0,0);
   display: inline-block;
   font-size: 17px;
   line-height: 1.2;
   border-radius: 10px;
   position: relative;
-  background: #28a745;
   color: #fff;
   font-weight: 700;
-  line-height: 1.4;
   padding: 10px 16px;
+  background: transparent;
+  border: 2px dashed #28a745;
 }
 
 button:hover {
-  background: #218838;
+  background: #46684e;
 }
 
 button.danger {
-  background: #dc3545;
+  border: 2px dashed #dc3545;
 }
 
 button.danger:hover {
-  background: #c82333;
+  background: #70343a;
 }
 
 button.warning {
-  background: #ffc107;
+  border: 2px dashed #ffc107;
 }
 
 button.warning:hover {
-  background: #e0a800;
+  background: #8b7d52;
 }
 
 .icon-button {
