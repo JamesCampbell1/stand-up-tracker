@@ -7,7 +7,7 @@ interface Props {
 export const ColumnHeader = ({ title }: Props) => {
     return (
         <div className="section">
-            <h2>{title}</h2>
+            <h2 className="heading">{title}</h2>
         </div>
     );
 };

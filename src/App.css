@@ -1,3 +1,7 @@
+h2 {
+  margin: 15px 0;
+}
+
 svg {
   color: #fff;
   display: block;
@@ -55,15 +59,29 @@ button.warning:hover {
 
 .layout-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 2fr 1fr;
   width: 95%;
   gap: 15px;
   padding-top: 20px;
 }
 
+@media only screen and (max-width: 1500px) {
+  .layout-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section.blockers {
+    grid-column: 1 / 3;
+  }
+}
+
 @media only screen and (max-width: 900px) {
   .layout-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section.blockers {
+    grid-column: 1;
   }
 }
 
@@ -176,4 +194,8 @@ button.warning:hover {
 
 .delete-button-container > button {
   margin-left: 10px;
+}
+
+.heading {
+  text-transform: capitalize;
 }

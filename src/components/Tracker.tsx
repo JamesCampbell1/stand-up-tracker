@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { ColumnHeader } from './ColumnHeader';
+import { DaySection } from './DaySection';
 import { TaskInput } from './TaskInput';
 import { TaskList } from './TaskList';
 
@@ -10,51 +11,46 @@ export const Tracker = () => {
 
     const [yesterdayTaskList, setYesterdayTaskList] = useState<string[] | []>([]);
     const [todayTaskList, setTodayTaskList] = useState<string[] | []>([]);
+    const [blockerTaskList, setBlockerTaskList] = useState<string[] | []>([]);
 
     useEffect(() => {
         setYesterdayTaskList(getList('yesterday'));
         setTodayTaskList(getList('today'));
+        setBlockerTaskList(getList('blocker'));
     }, []);
 
     return (
         <div className="layout-grid">
+            <DaySection
+                taskList={yesterdayTaskList} 
+                setTaskList={setYesterdayTaskList}
+                otherTaskList={todayTaskList}
+                setOtherTaskList={setTodayTaskList}
+                listType="yesterday"
+            />
 
-            <div className="section">
+            <DaySection
+                taskList={todayTaskList} 
+                setTaskList={setTodayTaskList}
+                otherTaskList={yesterdayTaskList}
+                setOtherTaskList={setYesterdayTaskList}
+                listType="today"
+            />
+
+            <div className="section blockers">
                 <div>
-                    <ColumnHeader title="Yesterday" />
+                    <ColumnHeader title="blockers" />
                 </div>
                 <div className="content">
-                    <TaskInput 
-                        taskList={yesterdayTaskList}
-                        setTaskList={setYesterdayTaskList}
-                        listType="yesterday"
+                    <TaskInput
+                        taskList={blockerTaskList}
+                        setTaskList={setBlockerTaskList}
+                        listType="blocker"
                     />
                     <TaskList 
-                        taskList={yesterdayTaskList} 
-                        setTaskList={setYesterdayTaskList}
-                        otherTaskList={todayTaskList}
-                        setOtherTaskList={setTodayTaskList}
-                        listType="yesterday"
-                    />
-                </div>
-            </div>
-
-            <div className="section">
-                <div>
-                    <ColumnHeader title="Today" />
-                </div>
-                <div className="content">
-                    <TaskInput 
-                        taskList={todayTaskList} 
-                        setTaskList={setTodayTaskList} 
-                        listType="today"
-                    />
-                    <TaskList 
-                        taskList={todayTaskList} 
-                        setTaskList={setTodayTaskList}
-                        otherTaskList={yesterdayTaskList}
-                        setOtherTaskList={setYesterdayTaskList}
-                        listType="today"
+                        taskList={blockerTaskList} 
+                        setTaskList={setBlockerTaskList}
+                        listType="blocker"
                     />
                 </div>
             </div>

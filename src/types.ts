@@ -1,1 +1,1 @@
-export type ListType = 'yesterday' | 'today';
+export type ListType = 'yesterday' | 'today' | 'blocker';

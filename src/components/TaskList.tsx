@@ -7,8 +7,8 @@ import { SwapIcon } from './SwapIcon';
 interface Props {
     taskList: [] | string[];
     setTaskList: React.Dispatch<React.SetStateAction<[] | string[]>>;
-    otherTaskList: [] | string[];
-    setOtherTaskList: React.Dispatch<React.SetStateAction<[] | string[]>>;
+    otherTaskList?: [] | string[];
+    setOtherTaskList?: React.Dispatch<React.SetStateAction<[] | string[]>>;
     listType: ListType;
 }
 
@@ -26,13 +26,15 @@ export const TaskList = ({ taskList, setTaskList, otherTaskList, setOtherTaskLis
     }
 
     const moveTask = (index: number) => {
-        const taskToMove = deleteTask(index);
-        const newOtherTaskList = [...otherTaskList, ...taskToMove];
-        setOtherTaskList(newOtherTaskList);
-
-        const otherListType = listType === 'today' ? 'yesterday' : 'today';
-        
-        saveList(newOtherTaskList, otherListType);
+        if (listType !== 'blocker' && otherTaskList && setOtherTaskList) {
+            const taskToMove = deleteTask(index);
+            const newOtherTaskList = [...otherTaskList, ...taskToMove];
+            setOtherTaskList(newOtherTaskList);
+    
+            const otherListType = listType === 'today' ? 'yesterday' : 'today';
+            
+            saveList(newOtherTaskList, otherListType);
+        }
     }
 
     return (
@@ -43,13 +45,21 @@ export const TaskList = ({ taskList, setTaskList, otherTaskList, setOtherTaskLis
                     <li key={listType + index}>
                         {task}
                         <div className="delete-button-container">
-                            
-                            <button className="warning" onClick={() => moveTask(index)}><SwapIcon /></button>
+                            {
+                                listType !== 'blocker' &&
+                                <button className="warning" onClick={() => moveTask(index)}><SwapIcon /></button>
+                            }    
                             <button className="danger icon-button" onClick={() => deleteTask(index)}><DeleteIcon /></button>
                         </div>
                     </li>    
                 ) :
-                <p>👀 A very productive day doing nothing...</p>
+                <p>
+                    {
+                        listType !== 'blocker' ?
+                        '👀 A very productive day doing nothing...' :
+                        '🐂 nothing is getting in your way today'
+                    }
+                </p>
             }
         </ul>
     );
