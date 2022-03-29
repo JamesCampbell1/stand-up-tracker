@@ -197,4 +197,9 @@ button.warning:hover {
 .random-fact-container {
   font-size: 25px;
   text-align: center;
+  margin: 10px 30px 0;
+  background: rgb(139 125 82 / 50%);
+  padding: 5px 20px;
+  border-radius: 5px;
+  border: 2px dashed #ffc107;
 }
