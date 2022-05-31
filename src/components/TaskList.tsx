@@ -1,66 +1,103 @@
 import React from 'react';
+import { DragDropContext, Droppable, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { ListType } from '../types';
-import { DeleteIcon } from './DeleteIcon';
-import { SwapIcon } from './SwapIcon';
+import { ListType, TaskListModel, TaskModel } from '../types';
+import { Task } from './Task';
 
 interface Props {
-    taskList: [] | string[];
-    setTaskList: React.Dispatch<React.SetStateAction<[] | string[]>>;
-    otherTaskList?: [] | string[];
-    setOtherTaskList?: React.Dispatch<React.SetStateAction<[] | string[]>>;
+    taskList: TaskListModel;
+    setTaskList: React.Dispatch<React.SetStateAction<null | TaskListModel>>;
     listType: ListType;
 }
 
-export const TaskList = ({ taskList, setTaskList, otherTaskList, setOtherTaskList, listType }: Props) => {
+const reorder = (list: TaskModel[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+}
+
+// Todo: implement moving
+// const move = (source, destination, droppableSource, droppableDestination) => {
+//     const sourceClone = Array.from(source);
+//     const destinationClone = Array.from(destination);
+//     const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+//     destinationClone.splice(droppableDestination.index, 0, removed);
+
+//     const result: any = {};
+//     result[droppableSource.droppableId] = sourceClone;
+//     result[droppableDestination.droppableId] = destinationClone;
+
+//     return result;
+// }
+
+export const TaskList = ({ taskList, setTaskList, listType }: Props) => {
 
     const {saveList} = useLocalStorage();
 
     const deleteTask = (index: number) => {
-        const newTaskList = taskList.slice();
-        const deletedTask = newTaskList.splice(index, 1);
+        const newTaskList = {...taskList};
+        const deletedTask = newTaskList.tasks.splice(index, 1);
         setTaskList(newTaskList);
         saveList(newTaskList, listType);
         
         return deletedTask;
     }
 
-    const moveTask = (index: number) => {
-        if (listType !== 'blocker' && otherTaskList && setOtherTaskList) {
-            const taskToMove = deleteTask(index);
-            const newOtherTaskList = [...otherTaskList, ...taskToMove];
-            setOtherTaskList(newOtherTaskList);
-    
-            const otherListType = listType === 'today' ? 'yesterday' : 'today';
-            
-            saveList(newOtherTaskList, otherListType);
+    const onDragEnd = ({source, destination}: DropResult) => {
+
+        const droppedOutsideTheList = !destination;
+        const droppedInSameOrder = (destination?.index === source.index);
+
+        if (droppedOutsideTheList || droppedInSameOrder) {
+            return;
+        }
+
+        const droppedInsideTheSameList = (source.droppableId === destination.droppableId);
+
+        if (droppedInsideTheSameList) {
+            const tasks = reorder(taskList.tasks, source.index, destination.index);
+            setTaskList({...taskList, tasks});
+        } else {
+            // Todo: handle dropped in another list
         }
     }
 
     return (
-        <ul className="task-list">
-            {
-                taskList.length ?
-                taskList.map((task: string, index: number) =>
-                    <li key={listType + index}>
-                        {task}
-                        <div className="delete-button-container">
+        <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId={`${listType}-list`}>
+                {
+                    provided => (
+                        <ul 
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            className="task-list"
+                        >
                             {
-                                listType !== 'blocker' &&
-                                <button className="warning" onClick={() => moveTask(index)}><SwapIcon /></button>
-                            }    
-                            <button className="danger icon-button" onClick={() => deleteTask(index)}><DeleteIcon /></button>
-                        </div>
-                    </li>    
-                ) :
-                <p>
-                    {
-                        listType !== 'blocker' ?
-                        '👀 A very productive day doing nothing...' :
-                        '🐂 nothing is getting in your way today'
-                    }
-                </p>
-            }
-        </ul>
+                                taskList.tasks?.length ?
+                                taskList.tasks.map((task: TaskModel, index: number) =>
+                                    <Task 
+                                        key={listType + task.id} 
+                                        task={task} 
+                                        index={index} 
+                                        deleteTask={deleteTask} 
+                                    />
+                                ) :
+                                <p>
+                                    {
+                                        listType !== 'blocker' ?
+                                        '👀 A very productive day doing nothing...' :
+                                        '🐂 nothing is getting in your way today'
+                                    }
+                                </p>
+                            }
+                            {provided.placeholder}
+                        </ul>
+                    )
+                }
+            </Droppable>
+        </DragDropContext>
     );
 };

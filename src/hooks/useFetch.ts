@@ -9,7 +9,6 @@ export const useFetch = (url: string) => {
             const response = await fetch(url);
             const json = await response.json();
             setResponse(json);
-            console.log(json);
             
             setIsLoading(false);
         }

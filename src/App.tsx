@@ -6,8 +6,10 @@ import { Tracker } from './components/Tracker';
 function App() {
   return (
     <div className="app">
-      <RandomFact />
-      <Tracker />
+      <div className="container">
+        <RandomFact />
+        <Tracker />
+      </div>
     </div>
   );
 }

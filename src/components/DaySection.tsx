@@ -1,20 +1,20 @@
-import { ListType } from "../types";
+import { ListType, TaskListModel } from "../types";
 import { ColumnHeader } from "./ColumnHeader";
 import { TaskInput } from "./TaskInput";
 import { TaskList } from "./TaskList";
 
 interface Props {
-    taskList: [] | string[];
-    setTaskList: React.Dispatch<React.SetStateAction<[] | string[]>>;
-    otherTaskList: [] | string[];
-    setOtherTaskList: React.Dispatch<React.SetStateAction<[] | string[]>>;
+    taskList: TaskListModel;
+    setTaskList: React.Dispatch<React.SetStateAction<null |TaskListModel>>;
+    otherTaskList: TaskListModel;
+    setOtherTaskList: React.Dispatch<React.SetStateAction<null |TaskListModel>>;
     listType: ListType;
 }
 
-export const DaySection = ({ taskList, setTaskList, otherTaskList, setOtherTaskList, listType }: Props) => {
+export const DaySection = ({ taskList, setTaskList, listType }: Props) => {
     return (
         <div className="section">
-            <div>
+            <div className="section-header">
                 <ColumnHeader title={listType} />
             </div>
             <div className="content">
@@ -26,8 +26,6 @@ export const DaySection = ({ taskList, setTaskList, otherTaskList, setOtherTaskL
                 <TaskList 
                     taskList={taskList} 
                     setTaskList={setTaskList}
-                    otherTaskList={otherTaskList}
-                    setOtherTaskList={setOtherTaskList}
                     listType={listType}
                 />
             </div>
