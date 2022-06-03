@@ -9,7 +9,7 @@ export const useLocalStorage = () => {
 
     const getList = (listType: ListType) => {
         const listString = localStorage.getItem(listType);
-        return JSON.parse(listString ?? `{title: "${listType}", tasks: []}`);
+        return JSON.parse(listString ?? `{"title": "${listType}", "tasks": []}`);
     }
 
     return {
