@@ -91,6 +91,7 @@ button.warning:hover {
 .section > div {
   border: 1px dashed #fff;
   padding: 0 20px;
+  border-radius: 5px;
 }
 
 .section-header {

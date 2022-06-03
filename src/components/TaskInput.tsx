@@ -4,16 +4,16 @@ import { ListType, TaskListModel } from '../types';
 
 interface Props {
     taskList: TaskListModel;
-    setTaskList: React.Dispatch<React.SetStateAction<null | TaskListModel>>
+    setTaskList: React.Dispatch<React.SetStateAction<TaskListModel>>
     listType: ListType;
+    nextTaskId: number;
+    setNextTaskId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const TaskInput = ({ taskList, setTaskList, listType }: Props) => {
+export const TaskInput = ({ taskList, setTaskList, listType, nextTaskId, setNextTaskId }: Props) => {
 
     const [taskName, setTaskName] = useState('');
-    const {saveList} = useLocalStorage();
-
-    const getNewTaskId = () => taskList.tasks?.length ? (Math.max(...taskList.tasks.map(a => a.id)) + 1) : 1;
+    const {saveList, saveNextId} = useLocalStorage();
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,10 +22,12 @@ export const TaskInput = ({ taskList, setTaskList, listType }: Props) => {
             ...taskList,
             tasks: [
                 ...(taskList.tasks ?? []),
-                {id: getNewTaskId(), content: taskName}
+                {id: nextTaskId, content: taskName}
             ]
         };
 
+        setNextTaskId(nextTaskId + 1)
+        saveNextId(nextTaskId + 1);
         setTaskList(newTaskList);
         saveList(newTaskList, listType);
         setTaskName('');

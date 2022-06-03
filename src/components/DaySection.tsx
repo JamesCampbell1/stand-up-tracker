@@ -5,13 +5,13 @@ import { TaskList } from "./TaskList";
 
 interface Props {
     taskList: TaskListModel;
-    setTaskList: React.Dispatch<React.SetStateAction<null |TaskListModel>>;
-    otherTaskList: TaskListModel;
-    setOtherTaskList: React.Dispatch<React.SetStateAction<null |TaskListModel>>;
+    setTaskList: React.Dispatch<React.SetStateAction<TaskListModel>>;
     listType: ListType;
+    nextTaskId: number;
+    setNextTaskId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const DaySection = ({ taskList, setTaskList, listType }: Props) => {
+export const DaySection = ({ taskList, setTaskList, listType, nextTaskId, setNextTaskId }: Props) => {
     return (
         <div className="section">
             <div className="section-header">
@@ -22,6 +22,8 @@ export const DaySection = ({ taskList, setTaskList, listType }: Props) => {
                     taskList={taskList}
                     setTaskList={setTaskList}
                     listType={listType}
+                    nextTaskId={nextTaskId}
+                    setNextTaskId={setNextTaskId}
                 />
                 <TaskList 
                     taskList={taskList} 

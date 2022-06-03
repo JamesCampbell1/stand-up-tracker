@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { TaskModel } from '../types';
+import { ListType, TaskModel } from '../types';
 import { DeleteIcon } from './DeleteIcon';
 
 interface Props {
     task: TaskModel;
     index: number;
     deleteTask: (index: number) => TaskModel[];
+    listType: ListType;
 }
 
-export const Task = ({ task, index, deleteTask}: Props) => {
+export const Task = ({ task, index, deleteTask, listType}: Props) => {
     return (
-        <Draggable draggableId={task.id.toString()} index={index}>
+        <Draggable draggableId={`${listType}-${task.id}`} index={index}>
             {
                 provided => (
                     <li
