@@ -1,5 +1,5 @@
 import React from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { ListType, TaskListModel, TaskModel } from '../types';
 import { Task } from './Task';
@@ -9,6 +9,13 @@ interface Props {
     setTaskList: React.Dispatch<React.SetStateAction<TaskListModel>>;
     listType: ListType;
 }
+
+const getTaskListStyle = ({isDraggingOver}: DroppableStateSnapshot) => ({
+    ...(isDraggingOver ? 
+        {background: 'rgb(139 125 82 / 50%)', border: '2px dashed #ffc107'} : 
+        {}
+    )
+});
 
 export const TaskList = ({ taskList, setTaskList, listType }: Props) => {
 
@@ -26,11 +33,12 @@ export const TaskList = ({ taskList, setTaskList, listType }: Props) => {
     return (
         <Droppable droppableId={`${listType}-list`}>
             {
-                provided => (
+                (provided, snapshot) => (
                     <ul 
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         className="task-list"
+                        style={getTaskListStyle(snapshot)}
                     >
                         {
                             taskList.tasks?.length ?

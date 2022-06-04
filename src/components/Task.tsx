@@ -1,4 +1,4 @@
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { ListType, TaskModel } from '../types';
 import { DeleteIcon } from './DeleteIcon';
 
@@ -9,15 +9,25 @@ interface Props {
     listType: ListType;
 }
 
+const getTaskStyle = ({isDragging}: DraggableStateSnapshot, {draggableProps}: DraggableProvided) => ({
+    ...(isDragging ? 
+        {background: '#377073', border: '2px dashed #47D1DA'} : 
+        {}
+    ),
+    // styles we need to apply on draggables
+    ...draggableProps.style,
+});
+
 export const Task = ({ task, index, deleteTask, listType}: Props) => {
     return (
         <Draggable draggableId={`${listType}-${task.id}`} index={index}>
             {
-                provided => (
+                (provided, snapshot) => (
                     <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        style={getTaskStyle(snapshot, provided)}
                     >
                         <span className="task-title">
                             {task.content}

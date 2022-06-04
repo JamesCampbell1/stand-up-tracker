@@ -186,6 +186,7 @@ button.warning:hover {
   background-color: #353A42;
   border-radius: 4px;
   margin: 10px auto;
+  user-select: none;
 }
 
 .task-title {

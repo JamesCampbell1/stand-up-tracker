@@ -112,7 +112,6 @@ export const Tracker = () => {
     return (
         <div className="layout-grid">
             {
-                // Todo: display a loader while getting task lists
                 yesterdayTaskList && todayTaskList && blockerTaskList &&
                 <DragDropContext onDragEnd={onDragEnd}>
                     <DaySection
