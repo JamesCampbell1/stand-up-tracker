@@ -176,16 +176,17 @@ button.warning:hover {
 .task-list {
   list-style: none;
   padding: 0;
+  padding-top: 10px;
 }
 
-.task-list > li {
+.task {
   padding: 12px;
   word-break: break-word;
   display: flex;
   align-items: center;
   background-color: #353A42;
   border-radius: 4px;
-  margin: 10px auto;
+  margin-bottom: 10px;
   user-select: none;
 }
 

@@ -11,7 +11,7 @@ interface Props {
 
 const getTaskStyle = ({isDragging}: DraggableStateSnapshot, {draggableProps}: DraggableProvided) => ({
     ...(isDragging ? 
-        {background: '#377073', border: '2px dashed #47D1DA'} : 
+        {background: '#377073', border: '2px dashed #47D1DA', margin: '10px auto'} : 
         {}
     ),
     // styles we need to apply on draggables
@@ -27,6 +27,7 @@ export const Task = ({ task, index, deleteTask, listType}: Props) => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        className="task"
                         style={getTaskStyle(snapshot, provided)}
                     >
                         <span className="task-title">
