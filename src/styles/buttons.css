@@ -1,0 +1,38 @@
+button {
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    line-height: 1.2;
+    border-radius: 10px;
+    position: relative;
+    color: var(--white);
+    font-weight: 700;
+    padding: 10px 16px;
+    background: transparent;
+    border: 2px dashed #28a745;
+}
+
+button:hover {
+    background: #46684e;
+}
+
+button.danger {
+    border: 2px dashed #dc3545;
+}
+
+button.danger:hover {
+    background: #70343a;
+}
+
+button.warning {
+    border: 2px dashed #ffc107;
+}
+
+button.warning:hover {
+    background: #8b7d52;
+}
+
+.icon-button {
+    padding: 8px 12px;
+}

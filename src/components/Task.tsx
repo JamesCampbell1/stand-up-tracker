@@ -1,6 +1,6 @@
 import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { ListType, TaskModel } from '../types';
-import { DeleteIcon } from './DeleteIcon';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 interface Props {
     task: TaskModel;
@@ -34,7 +34,9 @@ export const Task = ({ task, index, deleteTask, listType}: Props) => {
                             {task.content}
                         </span>
                         <div className="delete-button-container">   
-                            <button className="danger icon-button" onClick={() => deleteTask(index)}><DeleteIcon /></button>
+                            <button className="danger icon-button" onClick={() => deleteTask(index)}>
+                                <RiDeleteBin6Line className="icon" />
+                            </button>
                         </div>
                     </li>
                 )

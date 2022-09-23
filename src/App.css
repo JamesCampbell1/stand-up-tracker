@@ -1,53 +1,25 @@
+/* Todo: split css into different files */
+
+@import url("styles/utilities.css");
+@import url("styles/buttons.css");
+
+:root {
+  --main-bg-colour: #282c34;
+  --white: #fff;
+  --default-border-radius: 5px;
+}
+
 h2 {
   margin: 15px 0;
 }
 
 svg {
-  color: #fff;
+  color: var(--white);
   display: block;
 }
 
-button {
-  cursor: pointer;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  line-height: 1.2;
-  border-radius: 10px;
-  position: relative;
-  color: #fff;
-  font-weight: 700;
-  padding: 10px 16px;
-  background: transparent;
-  border: 2px dashed #28a745;
-}
-
-button:hover {
-  background: #46684e;
-}
-
-button.danger {
-  border: 2px dashed #dc3545;
-}
-
-button.danger:hover {
-  background: #70343a;
-}
-
-button.warning {
-  border: 2px dashed #ffc107;
-}
-
-button.warning:hover {
-  background: #8b7d52;
-}
-
-.icon-button {
-  padding: 8px 12px;
-}
-
 .app {
-  background-color: #282c34;
+  background-color: var(--main-bg-colour);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -89,9 +61,9 @@ button.warning:hover {
 }
 
 .section > div {
-  border: 1px dashed #fff;
+  border: 1px dashed var(--white);
   padding: 0 20px;
-  border-radius: 5px;
+  border-radius: var(--default-border-radius);
 }
 
 .section-header {
@@ -121,7 +93,7 @@ button.warning:hover {
   border-bottom: 2px dashed #9b9b9b;
   outline: 0;
   font-size: 1.3rem;
-  color: #fff;
+  color: var(--white);
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
@@ -152,7 +124,7 @@ button.warning:hover {
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #fff;
+  color: var(--white);
   font-weight: bold;    
 }
 
@@ -160,7 +132,7 @@ button.warning:hover {
   padding-bottom: 6px;  
   font-weight: 700;
   border-width: 2px;
-  border-color: #fff;
+  border-color: var(--white);
 }
 
 /* reset input */
@@ -185,7 +157,7 @@ button.warning:hover {
   display: flex;
   align-items: center;
   background-color: #353A42;
-  border-radius: 4px;
+  border-radius: var(--default-border-radius);
   margin-bottom: 10px;
   user-select: none;
 }
@@ -215,6 +187,42 @@ button.warning:hover {
   margin-top: 10px;
   background: rgb(139 125 82 / 50%);
   padding: 5px 20px;
-  border-radius: 5px;
+  border-radius: var(--default-border-radius);
   border: 2px dashed #ffc107;
 }
+
+.settings-container {
+  display: flex;
+  justify-content: flex-end;
+  color: #B9BABD;
+  margin-top: 10px;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-inner {
+  width: 80%;
+  border-radius: var(--default-border-radius);
+  border: 2px dashed var(--white);
+  background-color: var(--main-bg-colour);
+  color: var(--white);
+  padding: 15px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+

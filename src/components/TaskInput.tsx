@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { ListType, TaskListModel } from '../types';
+import { TextInput } from './TextInput';
 
 interface Props {
     taskList: TaskListModel;
@@ -35,18 +36,17 @@ export const TaskInput = ({ taskList, setTaskList, listType, nextTaskId, setNext
 
     return (
         <form className="form-group" onSubmit={onSubmit}>
-            <input 
-                type="text" 
-                className="form-field" 
-                placeholder="Task" 
+            <TextInput
                 name={`${listType}-task-input`}
                 id={`${listType}-task-input`}
-                required
                 value={taskName}
-                autoComplete="off"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {setTaskName(e.currentTarget.value)}}
+                autoComplete="off"
+                placeholder="Task"
+                label="Task name"
+                required
             />
-            <label htmlFor={`${listType}-task-input`} className="form-label">Task name</label>
+            {/* Todo: fix that this is stretched */}
             <button className="add-button" type="submit">Add</button>
         </form>
     );

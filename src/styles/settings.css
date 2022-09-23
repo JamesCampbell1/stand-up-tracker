@@ -1,0 +1,11 @@
+.settings-title {
+    border-bottom: 1px dashed var(--white);
+    padding-bottom: 10px;
+}
+
+.settings-container {
+    display: flex;
+    justify-content: flex-end;
+    color: #B9BABD;
+    margin-top: 10px;
+}
